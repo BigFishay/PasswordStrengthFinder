@@ -8,10 +8,10 @@ class Program
         PSFinder psf = new PSFinder();
         while (ex)
         {
-            Console.WriteLine("Welcome to the Password Strength Finder. \n " +
-                "This program runs locally so everything stays secure. \n " +
+            Console.WriteLine("Welcome to the Password Strength Finder. \n" +
+                "This program runs locally so everything stays secure. \n" +
                 "[0] Check password \n" +
-                "[1] Add banned words \n" +
+                "[1] Add/remove banned words \n" +
                 "[2] Exit");
             int choice = int.Parse(Console.ReadLine());
             switch (choice){
