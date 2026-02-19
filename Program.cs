@@ -41,7 +41,7 @@ class Program
             string password = Console.ReadLine();
             if (password != null)
             {
-                double result = psf.Analyze(password);
+                int result = psf.Analyze(password);
                 if (result > 3)
                     Console.WriteLine("Good");
                 else if (result > 2)
@@ -109,26 +109,24 @@ class Program
 
         public bool AddBannedWord(string word)
         {
-            string temp = word.ToLower();
-            if (!string.IsNullOrWhiteSpace(temp) && !bannedList.Contains(temp))
+            if (!string.IsNullOrWhiteSpace(word) && !bannedList.Contains(word))
             {
-                bannedList.AddLast(temp);
+                bannedList.AddLast(word);
                 return true;
             }
             return false;
         }
         public bool RemoveBannedWord(string? word)
         {
-            string temp = word.ToLower();
-            if (!string.IsNullOrWhiteSpace(temp) && bannedList.Contains(temp))
+            if (!string.IsNullOrWhiteSpace(word) && bannedList.Contains(word))
             {
-                bannedList.Remove(temp);
+                bannedList.Remove(word);
                 return true;
             }
             return false;
         }
 
-        public double Analyze(string password)
+        public int Analyze(string password)
         {
             return Zxcvbn.Core.EvaluatePassword(password, bannedList).Score;
         }
