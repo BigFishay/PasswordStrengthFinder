@@ -1,4 +1,6 @@
-﻿class Program
+﻿using Zxcvbn;
+
+class Program
 {
     static void Main(string[] args)
     {
@@ -40,9 +42,9 @@
             if (password != null)
             {
                 double result = psf.Analyze(password);
-                if (result > 66)
+                if (result > 3)
                     Console.WriteLine("Good");
-                else if (result > 33)
+                else if (result > 2)
                     Console.WriteLine("Meh");
                 else Console.WriteLine("Bad");
                 ex = false;
@@ -107,18 +109,20 @@
 
         public bool AddBannedWord(string word)
         {
-            if (!string.IsNullOrWhiteSpace(word) && !bannedList.Contains(word))
+            string temp = word.ToLower();
+            if (!string.IsNullOrWhiteSpace(temp) && !bannedList.Contains(temp))
             {
-                bannedList.AddLast(word);
+                bannedList.AddLast(temp);
                 return true;
             }
             return false;
         }
         public bool RemoveBannedWord(string? word)
         {
-            if (!string.IsNullOrWhiteSpace(word) && bannedList.Contains(word))
+            string temp = word.ToLower();
+            if (!string.IsNullOrWhiteSpace(temp) && bannedList.Contains(temp))
             {
-                bannedList.Remove(word);
+                bannedList.Remove(temp);
                 return true;
             }
             return false;
@@ -126,14 +130,12 @@
 
         public double Analyze(string password)
         {
-            return 0;
+            return Zxcvbn.Core.EvaluatePassword(password, bannedList).Score;
         }
 
         public string Banned()
         {
             return string.Join(", ", bannedList);
         }
-
-
     }
 }
